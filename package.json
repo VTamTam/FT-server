@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "DOM": "0.0.3",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "core-js": "^3.11.0",
     "express": "^4.17.1",
