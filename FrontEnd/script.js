@@ -2,8 +2,8 @@ function setupPage(data) {
     if (!data) {
         return null;
     } else {
+        main.innerHTML = "";
         const newData = data;
-        console.log( "DATA: " ,newData);
         if(typeof(data) === "string"){newData = JSON.parse(data)}
         newData.forEach(element => {createNews(element); console.log(element)})
     }
@@ -32,11 +32,11 @@ function createNews(news) {
     description.classList.add('description');
     title.classList.add('title');
 
-    date.innerText = news.TV.id.time;
-    imageNew.src = news.TV.id.image;
-    title.innerText = news.TV.id.name;
-    header.innerText = news.TV.id.language;
-    description.innerText = news.TV.description;
+    date.innerText = news.time;
+    imageNew.src = news.image;
+    title.innerText = news.name;
+    header.innerText = news.language;
+    description.innerText = news.description;
 }
 
 function fetchOne() {
@@ -50,12 +50,9 @@ function fetchOne() {
 
 const searchNews = (event) => {
 	const searchInput = document.getElementById('search-input').value;
-	console.log('result: ', searchInput);
     const key = searchInput;
-	fetch(`/search/{key}`)
-		.then((res) => {
-			return res.json();
-		})
+	fetch(`http://localhost:3000/search/${key.trim()}`)
+		.then((res) => res.json())
         .then((data) => setupPage(data))
 		.catch((error) => console.log(error));
 	event.preventDefault();
