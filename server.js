@@ -1,11 +1,8 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-const { response } = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000; 
-
-let FT_API = require('./FT_API.json');
-
+let API_TV = require('./TV.json');
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.static("FrontEnd"));
@@ -13,29 +10,29 @@ app.use(express.static("FrontEnd"));
 
 // show all the news 
 app.get('/api', function(req, res){
-  console.log("first step");
-  console.log(FT_API)
-  const query = {};
-  const news = FT_API
-  res.json(FT_API)
-  .then((news) => {
-    res.json({ news });
-  })
-  .catch((err) => res.send({ Error: err }));
+  res.json(API_TV)
 });
 // end  
 
 // search the world 
 app.get('/search/:key', (req, res) => {
-  console.log("I got it ");
-  const {key} = req.params;
-  console.log(key)
-  const API = FT_API;
-  const final = API.collections.filter(
-    (el) => {el.name.indexOf === key.indexOf || el.description.indexOf === key.indexOf}
-  )
-  res.json({final})
-  });
+  const key = req.params.key;
+  console.log("Search key is :" ,key);
+  if(key) {
+    const final = API_TV.TV.filter(
+      element => { 
+        element.name.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
+         element.description.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        
+        // element.name.indexOf === key.indexOf || 
+        // element.description.indexOf === key.indexOf
+      });
+      res.json(final);
+      console.log(final);
+    } else {
+      res.send( "Search key !");
+    }
+})
 
 app.listen(PORT, () => {
   console.log(`Running at \`http://localhost:${PORT}\`...`);

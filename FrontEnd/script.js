@@ -7,8 +7,8 @@ function fetchOne() {
 			if (!data) {
 				return null;
 			} else {
-				console.log(data);
-				data.forEach((element) => {
+				console.log( "DATA: " ,data);
+				data.forEach(element => {
 					const news = document.createElement('div');
 					const date = document.createElement('h2');
 					const imageNew = document.createElement('img');
@@ -31,22 +31,21 @@ function fetchOne() {
 					description.classList.add('description');
 					title.classList.add('title');
 
-					date.innerText = element.collections.id.createdAt;
-					imageNew.src = element.collections.id.url;
-					title.innerText = element.collections.id.name;
-					header.innerText = element.collections.id.id;
-					description.innerText = element.collections[0].description;
-				});
-			}
+					date.innerText = element.TV.id.time;
+					imageNew.src = element.TV.id.image;
+					title.innerText = element.TV.id.name;
+					header.innerText = element.TV.id.language;
+					description.innerText = element.TV.description;
+				})
+            }
 		})
 		.catch((error) => console.log(error));
 }
 const searchNews = (event) => {
 	const searchInput = document.getElementById('search-input').value;
 	console.log('result: ', searchInput);
-	const lowCase = searchInput;
-	//console.log(searchInput , "this is the search")
-	fetch(`/search/{lowCase}`)
+    const key = searchInput;
+	fetch(`/search/{key}`)
 		.then((res) => {
 			console.log(res);
 		})
