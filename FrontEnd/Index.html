@@ -32,12 +32,19 @@
         To begin the development, run `npm start` or `yarn start`.
         To create a production bundle, use `npm run build` or `yarn build`.
         <p>
-          <div class="pagination">
-          <a href="#">&laquo;</a>
-          <a href="#" class="active">1</a>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <a href="#">&raquo;</a>
+          <div>
+            <select name="paginatedNumber" id="paginatedNumber">
+             <option value=5>5</option>
+              <option value=10>10</option>
+              <option value=20>20</option>
+              </select>
+          </div>
+          <div class="pagination" id="pagination">
+          <a href="#" id="pagination1">&laquo;</a>
+          <a href="#" id="pagination2" >1</a>
+          <a href="#" id="pagination3" >2</a>
+          <a href="#" id="pagination4">3</a>
+          <a href="#" id="pagination5">&raquo;</a>
 </div>
   </body>
 </html>

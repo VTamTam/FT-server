@@ -5,11 +5,10 @@ function setupPage(data) {
         main.innerHTML = "";
         const newData = data;
         if(typeof(data) === "string"){newData = JSON.parse(data)}
-        newData.forEach(element => {createNews(element); console.log(element)})
+        newData.forEach(element => {createNews(element);})
     }
 }
 function createNews(news) {
-    console.log( "1 by one: " ,news);
     const news1 = document.createElement('div');
     const date = document.createElement('h2');
     const imageNew = document.createElement('img');
@@ -39,8 +38,9 @@ function createNews(news) {
     description.innerText = news.description;
 }
 
-function fetchOne() {
-	fetch('/api')
+function fetchOne({page, limit}) {
+
+	fetch(`/api?page=${page}&limit=${limit}=2`)
 		.then((res) => {
 			return res.json();
 		})
@@ -60,12 +60,51 @@ const searchNews = (event) => {
 
 
 function setup() {
+    var limit = 5;
+    var page = 1;
 	const rootElem = document.getElementById('root');
 	const searchButton = document.getElementById('search-button');
 	const main = document.getElementById('main');
-
 	searchButton.addEventListener('click', (event) => searchNews(event));
-	fetchOne();
+
+    const limitNumber = document.getElementById('paginatedNumber');
+    limitNumber.addEventListener('change', () => {
+        limit = document.getElementById('paginatedNumber').value;
+        page = 1 ;
+        fetchOne({page, limit});
+    });
+
+    const pageNumber1 = document.getElementById('pagination1');
+    pageNumber1.addEventListener('click', () => {
+        if (page == 1) {
+        } else {
+            page = page -1 ;
+            pageNumber2.classList.add("active")
+        }
+        fetchOne({page, limit});
+    });
+    const pageNumber2 = document.getElementById('pagination2');
+    pageNumber2.addEventListener('click', () => {
+        page = 1;
+        fetchOne({page, limit});
+    });
+        const pageNumber3 = document.getElementById('pagination3');
+    pageNumber3.addEventListener('click', () => {
+        page = 2;
+        fetchOne({page, limit});
+    });
+        const pageNumber4 = document.getElementById('pagination4');
+    pageNumber4.addEventListener('click', () => {
+        page = 3;
+        fetchOne({page, limit});
+    });
+        const pageNumber5 = document.getElementById('pagination5');
+    pageNumber5.addEventListener('click', () => {
+        page ++
+        fetchOne({page, limit});
+
+    });
+	fetchOne({page, limit});
 };
 
 window.onload = setup;

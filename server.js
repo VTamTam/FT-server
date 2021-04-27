@@ -9,8 +9,9 @@ app.use(express.static('FrontEnd'));
 
 // show all the news
 app.get('/api', paginated(API_TV), (req, res) => {
-
   res.json(res.paginatedResults);
+  console.log("result");
+  console.log(res.paginatedResults);
 });
 // end
 
@@ -37,24 +38,25 @@ function paginated(params) {
   return (req, res, next) => {
     const page = parseInt(req.query.page)
     const limit = parseInt(req.query.limit)
+    console.log("page:" ,page ,"limit:" , limit)
 
     const startIndex = (page - 1) * limit
     const endIndex = page * limit
 
-    const results = {}
-    if (startIndex > 0 ) {
-      results.next = {
-        page: page + 1,
-        limit: limit
-      }
-    }
-    if (endIndex < params.length ) {
-      results.previous = {
-      page: page - 1,
-      limit: limit
-      }
-    }
-    results.results = params.slice(startIndex, endIndex)
+    // const results = {}
+    // if (startIndex > 0 ) {
+    //   results.next = {
+    //     page: page + 1,
+    //     limit: limit
+    //   }
+    // }
+    // if (endIndex < params.length ) {
+    //   results.previous = {
+    //   page: page - 1,
+    //   limit: limit
+    //   }
+    // }
+    const results = params.slice(startIndex, endIndex)
     res.paginatedResults = (results)
     next()
   }
