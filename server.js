@@ -7,23 +7,23 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.static('FrontEnd'));
 const fetch = require('node-fetch');
-var OriginalData;
+const bodySend = {
+  "queryString": "banks",
+  "resultContext" : {
+    "aspects" :[  "title","lifecycle","location","summary","editorial" ]
+  }
+};
+//var OriginalData;
 // show all the news
-app.get('/api', fetchAPI(OriginalData),(req, res) => {
-  // res.json(res.OrginalD);
-  console.log("Original: " ,OriginalData)
+app.get('/api', fetchAPI(), (req, res) => {
+  
+  res.json(res.OriginalData);
   //res.json(res.paginatedResults);
-  console.log("result");
+  //console.log("result");
 });
 // end
-function fetchAPI(params) {
+function fetchAPI() {
   return (req, res, next) => {
-    const bodySend = {
-      "queryString": "banks",
-      "resultContext" : {
-        "aspects" :[  "title","lifecycle","location","summary","editorial" ]
-      }
-    };
   
   fetch(`https://api.ft.com/content/search/v1`,{
       method: 'POST',
@@ -31,11 +31,14 @@ function fetchAPI(params) {
       headers: { 'Content-Type': 'application/json' , 'X-Api-Key' : '59cbaf20e3e06d3565778e7b9758f7892e89468293a48663b98bd1d9' }
   })
     .then((res) => res.json())
-    .then(data => {params = data.results[0].results ; console.log("resuold orginal paroms is ok " , params)})
-    .catch((error) => console.log(error));
-    //res.OrginalD(params); 
+    .then(data => {
+    const dataAPI = data.results[0].results
+    res.OriginalData = (dataAPI)
     next()
+    })
   }}
+
+
 // search the world
 app.get('/search/:key', paginated(API_TV),(req, res) => {
 	const key = req.params.key;

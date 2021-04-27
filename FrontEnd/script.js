@@ -14,16 +14,16 @@ function createNews(news) {
     const imageNew = document.createElement('img');
     const news2 = document.createElement('div');
     const title = document.createElement('h2');
-    const header = document.createElement('h2');
     const description = document.createElement('p');
+    const header = document.createElement('h2');
 
     main.appendChild(news1);
     main.appendChild(date);
     main.appendChild(imageNew);
     main.appendChild(news2);
     news2.appendChild(title);
-    news2.appendChild(header);
     news2.appendChild(description);
+    news2.appendChild(header);
 
     main.classList.add('main');
     news2.classList.add('news2');
@@ -31,11 +31,11 @@ function createNews(news) {
     description.classList.add('description');
     title.classList.add('title');
 
-    date.innerText = news.time;
-    imageNew.src = news.image;
-    title.innerText = news.name;
-    header.innerText = news.language;
-    description.innerText = news.description;
+    date.innerText = news.lifecycle.initialPublishDateTime;
+    imageNew.src = news.location.uri;
+    title.innerText = news.title.title;
+    description.innerText = news.summary.excerpt;
+    header.innerText = news.editorial.byline;
 }
 
 function fetchOne({page, limit}) {
