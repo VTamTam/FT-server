@@ -35,12 +35,12 @@ function createNews(news) {
     imageNew.src = news.location.uri;
     title.innerText = news.title.title;
     description.innerText = news.summary.excerpt;
-    header.innerText = news.editorial.byline;
+    header.innerText = news.editorial.subheading;
 }
 
 function fetchOne({page, limit}) {
 
-	fetch(`/api?page=${page}&limit=${limit}=2`)
+	fetch(`/api?page=${page}&limit=${limit}`)
 		.then((res) => {
 			return res.json();
 		})
@@ -48,10 +48,11 @@ function fetchOne({page, limit}) {
 		.catch((error) => console.log(error));
 }
 
-const searchNews = (event) => {
+const searchNews = (event , page , limit ) => {
+
 	const searchInput = document.getElementById('search-input').value;
     const key = searchInput;
-	fetch(`http://localhost:3000/search/${key.trim()}`)
+	fetch(`http://localhost:3000/search/?key=${key.trim()}&page=${page}&limit=${limit}`)
 		.then((res) => res.json())
         .then((data) => setupPage(data))
 		.catch((error) => console.log(error));
@@ -65,7 +66,7 @@ function setup() {
 	const rootElem = document.getElementById('root');
 	const searchButton = document.getElementById('search-button');
 	const main = document.getElementById('main');
-	searchButton.addEventListener('click', (event) => searchNews(event));
+	searchButton.addEventListener('click', (event) => searchNews(event , page , limit));
 
     const limitNumber = document.getElementById('paginatedNumber');
     limitNumber.addEventListener('change', () => {

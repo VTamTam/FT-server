@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3000;
-let API_TV = require('./TV.json');
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.static('FrontEnd'));
@@ -13,18 +13,46 @@ const bodySend = {
     "aspects" :[  "title","lifecycle","location","summary","editorial" ]
   }
 };
-//var OriginalData;
 // show all the news
 app.get('/api', fetchAPI(), (req, res) => {
-  
-  res.json(res.OriginalData);
-  //res.json(res.paginatedResults);
-  //console.log("result");
+    const page = parseInt(req.query.page)
+    const limit = parseInt(req.query.limit)
+    console.log("page:" ,page ,"limit:" , limit)
+
+    const startIndex = (page - 1) * limit
+    const endIndex = page * limit
+    const results = (res.OriginalData).slice(startIndex, endIndex)
+    res.json(results)
+
 });
 // end
-function fetchAPI() {
+
+// search the world
+app.get('/search/', fetchAPI("search"),(req, res) => {
+	  const key = req.query.key;
+    const page = parseInt(req.query.page)
+    const limit = parseInt(req.query.limit)
+    console.log("search :page:" ,page ,"limit:" , limit , "key:" , key)
+    const startIndex = (page - 1) * limit
+    const endIndex = page * limit
+
+	if (key.length > 0 ) {
+		const final = (res.OriginalSearchData).filter(
+			(element) =>
+				element.title.title.toLowerCase().indexOf(key.toLowerCase()) >= 0 ||
+				element.summary.excerpt.toLowerCase().indexOf(key.toLowerCase()) >= 0 ||
+        element.editorial.subheading.toLowerCase().indexOf(key.toLowerCase()) >= 0
+		);
+    const results = (res.OriginalSearchData).slice(startIndex, endIndex)
+    res.json(results)
+	} else {
+		res.send('Search key !');
+	}
+});
+// end
+// fetch function
+function fetchAPI(props) {
   return (req, res, next) => {
-  
   fetch(`https://api.ft.com/content/search/v1`,{
       method: 'POST',
       body: JSON.stringify(bodySend),
@@ -32,59 +60,45 @@ function fetchAPI() {
   })
     .then((res) => res.json())
     .then(data => {
-    const dataAPI = data.results[0].results
-    res.OriginalData = (dataAPI)
-    next()
+        const dataAPI = data.results[0].results
+      if (!props) {
+        res.OriginalData = (dataAPI)
+        next()
+      } else {
+        res.OriginalSearchData = (dataAPI)
+        next()
+      }
     })
   }}
-
-
-// search the world
-app.get('/search/:key', paginated(API_TV),(req, res) => {
-	const key = req.params.key;
-	console.log(key);
-	if (key.length > 0 ) {
-		const final = API_TV.filter(
-			(element) =>
-				element.name.toLowerCase().indexOf(key.toLowerCase()) >= 0 ||
-				element.description.toLowerCase().indexOf(key.toLowerCase()) >= 0
-		);
-    console.log(final);
-		res.json(final);
-		console.log("final");
-	} else {
-		res.send('Search key !');
-	}
-});
-// end
-
-function paginated(params) {
-  return (req, res, next) => {
-    const page = parseInt(req.query.page)
-    const limit = parseInt(req.query.limit)
-    console.log("page:" ,page ,"limit:" , limit)
-
-    const startIndex = (page - 1) * limit
-    const endIndex = page * limit
-    // this part its add the next page and pervious page on result and I don't need it now.
-    // const results = {}
-    // if (startIndex > 0 ) {
-    //   results.next = {
-    //     page: page + 1,
-    //     limit: limit
-    //   }
-    // }
-    // if (endIndex < params.length ) {
-    //   results.previous = {
-    //   page: page - 1,
-    //   limit: limit
-    //   }
-    // }
-    const results = params.slice(startIndex, endIndex)
-    res.paginatedResults = (results)
-    next()
-  }
-}
+// end fetch 
 app.listen(PORT, () => {
-	console.log(`Running at \`http://localhost:${PORT}\`...`);
+  console.log(`Running at \`http://localhost:${PORT}\`...`);
 }); 
+
+// function paginated(params) {
+//   return (req, res, next) => {
+//     const page = parseInt(req.query.page)
+//     const limit = parseInt(req.query.limit)
+//     console.log("page:" ,page ,"limit:" , limit)
+
+//     const startIndex = (page - 1) * limit
+//     const endIndex = page * limit
+//   //  this part its add the next page and pervious page on result and I don't need it now.
+//     const results = {}
+//     if (startIndex > 0 ) {
+//       results.next = {
+//         page: page + 1,
+//         limit: limit
+//       }
+//     }
+//     if (endIndex < params.length ) {
+//       results.previous = {
+//       page: page - 1,
+//       limit: limit
+//       }
+//     }
+//     const results = params.slice(startIndex, endIndex)
+//     res.paginatedResults = (results)
+//     next()
+//   }
+// }
