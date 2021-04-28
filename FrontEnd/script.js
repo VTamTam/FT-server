@@ -19,35 +19,54 @@ function createNews(news) {
     const title = document.createElement('a');
     containerTitle.appendChild(title);
     title.innerHTML = news.title.title;
+    title.href = news.location.uri;
     title.classList.add('title');
 
     const containerSummery = document.createElement('div');
     containerNews.appendChild(containerSummery);
     containerSummery.classList.add('containerSummery');
-    const summery = document.createElement('a');
+    const summery = document.createElement('p');
     containerSummery.appendChild(summery);
     summery.innerHTML = news.summary.excerpt;
     summery.classList.add('summery');
+
+    const containerEditorial = document.createElement('div');
+    containerNews.appendChild(containerEditorial);
+    containerEditorial.classList.add('containerEditorial');
+    const subheading = document.createElement('a');
+    containerEditorial.appendChild(subheading);
+    subheading.innerHTML = news.editorial.subheading;
+    subheading.href = news.location.uri;
+    subheading.classList.add('subheading');
 
     const containerByline = document.createElement('div');
     containerNews.appendChild(containerByline);
     containerByline.classList.add('containerByline');
     const byline = document.createElement('p');
     containerByline.appendChild(byline);
-    byline.innerHTML = news.editorial.byline;
-    byline.classList.add('byline');
+    if(news.editorial.byline){
+        byline.innerHTML = news.editorial.byline;
+        byline.classList.add('byline');
+    }else {
+        byline.innerHTML = null
+        byline.classList.add('byline');
+    }
     
-    const containerEditorial = document.createElement('div');
-    containerNews.appendChild(containerEditorial);
-    containerEditorial.classList.add('containerEditorial');
-    const subheading = document.createElement('p');
-    containerEditorial.appendChild(subheading);
-    subheading.innerHTML = news.editorial.subheading;
-    subheading.classList.add('subheading');
-    const date = document.createElement('p');
-    containerByline.appendChild(date);
-    date.innerText = news.lifecycle.initialPublishDateTime;
-    date.classList.add('data');
+    
+    const containerDate = document.createElement('div');
+    containerByline.appendChild(containerDate);
+    containerDate.classList.add('containerDate');
+    const dateT = document.createElement('p');
+    const timeD = document.createElement('p');
+    containerDate.appendChild(dateT).className = "date";
+    containerDate.appendChild(timeD).className = "date";
+    if (news.lifecycle.initialPublishDateTime) {
+        var date = news.lifecycle.initialPublishDateTime.split("T")[0];
+        var time = news.lifecycle.initialPublishDateTime.split("T")[1].split(".")[0].split(":").slice(0,2).join(':');
+    }
+    dateT.innerHTML = date;
+    timeD.innerHTML = time;
+    
 }
 
 function fetchOne({page, limit}) {
@@ -71,8 +90,8 @@ const searchNews = (event , page , limit ) => {
 	event.preventDefault();
 };
 
-
 function setup() {
+    Time();
     var limit = 5;
     var page = 1;
 	const rootElem = document.getElementById('root');
@@ -119,5 +138,18 @@ function setup() {
     });
 	fetchOne({page, limit});
 };
+ const Time = () => {
+     //link to TvMaze
+        const img = document.getElementById("Time");
+        const Time = document.createElement("p");
+        Time.className = "TimeZone";
+        img.appendChild(Time);
+        setInterval(myTimer, 1000);
 
+        function myTimer() {
+        var d = new Date();
+        var t = d.toLocaleTimeString();
+        Time.innerHTML = t;
+        }
+ }
 window.onload = setup;
