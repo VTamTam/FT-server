@@ -1,9 +1,69 @@
+*{
+  margin-left: auto;
+  margin-right: auto;
+}
+#second-form {
+  background-color: #fff1e5;
+}
+#main {
+  background-color: #fff1e5;
+}
+.TimeZone {
+  padding: 0px 90%;
+}
+.containerNews {
+  background-color: #eecdb0;
+  margin: 10px 15% 10px 15%;
+  padding: 20px 30px 20px 30px;
+  font-family: FinancierDisplayWeb,serif;
+}
+.title{
+  font-style: italic;
+  font-size: 20px;
+  font-weight: 700;
+  color: #333333;
+  line-height: 33px;
+  text-decoration: none;
+}
+.summery {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 25px;
+  color: #333322;
+  text-decoration: none;
+}
+.subheading {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 25px;
+  color: #333330;
+  text-decoration: none;
+}
+.byline {
+  padding-top: 30px;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 20px;
+  color: #333222;
+  text-decoration: none;
+}
+.date {
+  text-decoration: none;
+  padding-left: 80%;
+  font-style: italic;
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 0px;
+  color: #333333;
+}
 .pagination {
   display: block;
   margin-left: 30%;
   margin-top: 30px;
 }
-
 .pagination a {
   color: black;
   float: left;
@@ -13,11 +73,10 @@
   border: 1px solid #ddd;
   font-size: 22px;
 }
-
 .pagination a.active {
   background-color: #4CAF50;
   color: white;
   border: 1px solid #4CAF50;
 }
-
 .pagination a:hover:not(.active) {background-color: #ddd;}
+
