@@ -9,33 +9,45 @@ function setupPage(data) {
     }
 }
 function createNews(news) {
-    const news1 = document.createElement('div');
-    const date = document.createElement('h2');
-    const imageNew = document.createElement('img');
-    const news2 = document.createElement('div');
-    const title = document.createElement('h2');
-    const description = document.createElement('p');
-    const header = document.createElement('h2');
+    const containerNews = document.createElement('div');
+    main.appendChild(containerNews);
+    containerNews.classList.add('containerNews');
 
-    main.appendChild(news1);
-    main.appendChild(date);
-    main.appendChild(imageNew);
-    main.appendChild(news2);
-    news2.appendChild(title);
-    news2.appendChild(description);
-    news2.appendChild(header);
-
-    main.classList.add('main');
-    news2.classList.add('news2');
-    imageNew.classList.add('image');
-    description.classList.add('description');
+    const containerTitle = document.createElement('div');
+    containerNews.appendChild(containerTitle);
+    containerTitle.classList.add('containerTitle');
+    const title = document.createElement('a');
+    containerTitle.appendChild(title);
+    title.innerHTML = news.title.title;
     title.classList.add('title');
 
+    const containerSummery = document.createElement('div');
+    containerNews.appendChild(containerSummery);
+    containerSummery.classList.add('containerSummery');
+    const summery = document.createElement('a');
+    containerSummery.appendChild(summery);
+    summery.innerHTML = news.summary.excerpt;
+    summery.classList.add('summery');
+
+    const containerByline = document.createElement('div');
+    containerNews.appendChild(containerByline);
+    containerByline.classList.add('containerByline');
+    const byline = document.createElement('p');
+    containerByline.appendChild(byline);
+    byline.innerHTML = news.editorial.byline;
+    byline.classList.add('byline');
+    
+    const containerEditorial = document.createElement('div');
+    containerNews.appendChild(containerEditorial);
+    containerEditorial.classList.add('containerEditorial');
+    const subheading = document.createElement('p');
+    containerEditorial.appendChild(subheading);
+    subheading.innerHTML = news.editorial.subheading;
+    subheading.classList.add('subheading');
+    const date = document.createElement('p');
+    containerByline.appendChild(date);
     date.innerText = news.lifecycle.initialPublishDateTime;
-    imageNew.src = news.location.uri;
-    title.innerText = news.title.title;
-    description.innerText = news.summary.excerpt;
-    header.innerText = news.editorial.subheading;
+    date.classList.add('data');
 }
 
 function fetchOne({page, limit}) {
