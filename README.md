@@ -1,6 +1,6 @@
 # Welcome to FT-server
 
-![FT](https://www.samanthaettus.com/wp-content/uploads/2014/08/ft-logo.png 1.1k)
+![FT](https://www.samanthaettus.com/wp-content/uploads/2014/08/ft-logo.png)
 
 The FT server application is for achieve world news headlines that you can access the news that contains the keyword by searching for a specific keyword.
 like the Brexit, so the application shows you all the news about Brexit.
