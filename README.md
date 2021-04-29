@@ -2,8 +2,7 @@
 
 ![FT](https://www.samanthaettus.com/wp-content/uploads/2014/08/ft-logo.png)
 
-The FT server application is for achieve world news headlines that you can access the news that contains the keyword by searching for a specific keyword.
-like the Brexit, so the application shows you all the news about Brexit.
+The FT server application has been created for world news headlines to be accessed through searching for specific keywords; for example Brexit; through the application, the search Brexit will bring news all about that topic.
 
 App Name : FT API news
 Customer : Financial Times
@@ -13,7 +12,7 @@ Date : 30 Apr 2021
 Web URL : http://Heruco.COM
 
 # About this file
-The purpose of this file is to provide overview, setup instructions and background information of the project. If you have joined this project as a part of the development team, please ensure this file is up to date.
+The purpose of this file is to provide an overview, setup instructions and background information of the project. If you have joined this project as part of the development team, please ensure this file is up to date.
 
 Note : Any dependencies added / modified to this project which affect the running of the code in this git repository must be listed in this file. All developers must ensure that the instructions mentioned in this file are sufficient to enable a new developer to obtain a executable copy of the latest code in this repository, without involvement from any other human assistance.
 
@@ -30,7 +29,7 @@ II) Tools
 
 # Project Technical Specifications
 * This project is a server based project which uses NodeJS for the backend side 
-  and uses specific API from Financial Times 
+  and uses specific API from the Financial Times 
 * Javascript, CSS and HTML for landing page on front end.
 * The code is store on Github Repository and the application is running on Heroku. 
 * The design for reference is from FT.com website.
@@ -47,7 +46,7 @@ II) Tools
 As mentioned earlier , this is a NodeJS project,
 The below mentioned steps may vary significantly across various operating systems, please follow them accordingly.
 These instructions are aimed at a developer who has been added to the project team, after the project development has already been initiated,
-Therefore the aim is to get the code from the git repository to run on the developer's system, so as to allow him / her to continue with further development.
+Therefore the aim is to get the code from the git repository to run on the developer's system, to allow him / her to continue with further development.
 
 # Clone the repository from GitLab :
 git clone https://github.com/Erwin6997/FT-server
@@ -72,4 +71,4 @@ npm init
 
 # Start the server :
 npm start dev
-   (If you get error about Access to this API has been disallowed means you Token Key which you need for get access to the FT API is expired )
+   (If you get an error about Access about this API, it means it has been disallowed which means your Token Key you need to get access to the FT API has expired)
